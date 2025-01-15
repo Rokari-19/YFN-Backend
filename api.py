@@ -4,12 +4,14 @@ from flask_cors import CORS
 from flask_restful import Api, Resource, fields, reqparse, marshal_with, abort
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "http://localhost:5173"}})
+CORS(app, resources={r"/api/*": {"origins": "http://localhost:8080"}})
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 db = SQLAlchemy(app)
 api = Api(app)
 
-
+with app.app_context():
+    db.create_all()
+    
 class UserModel(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
@@ -57,4 +59,4 @@ def get_waitlist_count():
         return jsonify({'error': 'Server error'}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", debug=True)
