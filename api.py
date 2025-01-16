@@ -4,7 +4,7 @@ from flask_cors import CORS
 from flask_restful import Api, Resource, fields, reqparse, marshal_with, abort
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "http://localhost:8080"}})
+CORS(app, resources={r"/api/*": {"origins": "https://yfn-coming-soon.netlify.app"}})
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 db = SQLAlchemy(app)
 api = Api(app)
